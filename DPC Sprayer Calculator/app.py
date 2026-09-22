@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 
 st.set_page_config(
     page_title="DPC Sprayer Calibration Calculator",
@@ -7,7 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-chemical_file = "chemical_library.xlsx"
+chemical_file = Path(__file__).parent / "chemical_library.xlsx"
 
 try:
     chemicals = pd.read_excel(
