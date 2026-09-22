@@ -8,6 +8,75 @@ st.set_page_config(
     layout="centered"
 )
 
+st.markdown(
+    """
+    <style>
+    .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 2rem;
+        max-width: 900px;
+    }
+
+    h1, h2, h3 {
+        color: #272727;
+    }
+
+    h1 {
+        margin-bottom: 0.25rem;
+    }
+
+    div[data-testid="stMetric"] {
+        background-color: #F3EFE7;
+        border: 1px solid #DDD6C8;
+        border-radius: 12px;
+        padding: 14px 16px;
+    }
+
+    div[data-testid="stAlert"] {
+        border-radius: 10px;
+    }
+
+    div[data-baseweb="select"] > div {
+        border-radius: 10px;
+    }
+
+    div[data-testid="stNumberInput"] input {
+        border-radius: 10px;
+    }
+
+    div[data-testid="stTextInput"] input {
+        border-radius: 10px;
+    }
+
+    .dpc-result-box {
+        background-color: #272727;
+        color: #F7F4EE;
+        padding: 18px 20px;
+        border-radius: 14px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dpc-result-box h3 {
+        color: #F7F4EE;
+        margin-top: 0;
+    }
+
+    .dpc-result-box .amount {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0.25rem 0;
+    }
+
+    .dpc-subtle {
+        color: #666666;
+        font-size: 0.9rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 chemical_file = Path(__file__).parent / "chemical_library.xlsx"
 
 try:
@@ -40,37 +109,53 @@ catch_unit = st.selectbox(
 catch_amount = st.number_input(
     f"Amount collected from one nozzle in 1 minute ({catch_unit})",
     min_value=0.0,
-    step=0.1
+    value=None,
+    step=0.1,
+    placeholder="Enter amount"
 )
 
 nozzle_count = st.number_input(
     "Number of nozzles",
     min_value=1,
-    step=1
+    value=None,
+    step=1,
+    placeholder="Enter nozzle count"
 )
 
 course_distance = st.number_input(
     "Test course distance (feet)",
     min_value=1.0,
-    step=1.0
+    value=None,
+    step=1.0,
+    placeholder="Enter distance"
 )
+
 
 travel_time = st.number_input(
     "Time to travel test course (seconds)",
-    min_value=1.0,
-    step=0.1
+    min_value=0.1,
+    value=None,
+    step=0.1,
+    placeholder="Enter time"
 )
-
 spray_width = st.number_input(
     "Actual spray width (feet)",
     min_value=0.1,
-    step=0.1
+    value=None,
+    step=0.1,
+    placeholder="Enter width"
 )
 
 gpa = None
 mph = None
 
-if catch_amount > 0 and travel_time > 0 and spray_width > 0:
+if (
+    catch_amount is not None
+    and nozzle_count is not None
+    and course_distance is not None
+    and travel_time is not None
+    and spray_width is not None
+):
 
     if catch_unit == "mL":
         catch_fl_oz = catch_amount / 29.5735
