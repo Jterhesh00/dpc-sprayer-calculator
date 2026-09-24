@@ -13,7 +13,7 @@ st.markdown(
     <style>
     .block-container {
         padding-top: 1.5rem;
-        padding-bottom: 2rem;
+        padding-bottom: 8rem;
         max-width: 900px;
     }
 
@@ -210,6 +210,8 @@ if (
 st.header("2. Tank Size")
 
 tank_options = [
+    3,
+    4,
     50,
     75,
     100,
